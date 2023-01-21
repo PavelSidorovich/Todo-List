@@ -1,0 +1,18 @@
+<mat-card class="todo-card">
+  <mat-card-content class="todo-card__content">
+    <div class="todo-card__content--main">
+      <div class="todo-card__checkbox">
+        <mat-checkbox [checked]="todo.completed"></mat-checkbox>
+      </div>
+      <span>{{ todo.title }}</span>
+    </div>
+    <button
+      mat-icon-button
+      color="warn"
+      class="todo-card__btn--delete"
+      (click)="handleDelete()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>

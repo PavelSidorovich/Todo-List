@@ -1,0 +1,35 @@
+<div class="search-bar">
+  <input
+    id="search"
+    [(ngModel)]="todoNameFilter"
+    class="search-bar__input"
+    placeholder="Search for todos"
+  />
+</div>
+<div [ngSwitch]="fetchStatus">
+  <ng-container *ngSwitchCase="availiableFetchStatus.Loading">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </ng-container>
+  <ng-container *ngSwitchCase="availiableFetchStatus.Error">
+    <p>{{ errorMsg }}</p>
+  </ng-container>
+  <ng-container *ngSwitchCase="availiableFetchStatus.Completed">
+    <ng-container *ngIf="!filteredTodos.length; else todoCards">
+      <p>Nothing found</p>
+    </ng-container>
+    <ng-template #todoCards>
+      <app-todo-card
+        *ngFor="let todo of filteredTodos"
+        [todo]="todo"
+        (onDelete)="deleteTodo($event)"
+      ></app-todo-card>
+      <mat-paginator
+        (page)="handlePageEvent($event)"
+        [length]="totalTodos"
+        [pageSize]="size"
+      >
+      </mat-paginator>
+    </ng-template>
+  </ng-container>
+</div>

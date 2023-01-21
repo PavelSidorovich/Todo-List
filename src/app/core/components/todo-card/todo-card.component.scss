@@ -1,0 +1,27 @@
+.todo-card {
+  margin-bottom: 1em;
+}
+
+.todo-card__content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-card__content--main {
+  display: flex;
+  align-items: center;
+}
+
+.todo-card__checkbox {
+  margin-right: 1em;
+}
+
+@media only screen and (min-width: 961px) {
+  .todo-card:hover .todo-card__btn--delete {
+    visibility: visible;
+  }
+
+  .todo-card__btn--delete {
+    visibility: hidden;
+  }
+}
