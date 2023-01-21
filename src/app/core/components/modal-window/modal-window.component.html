@@ -1,0 +1,14 @@
+<div class="modal">
+  <div class="modal__window">
+    <div>
+      <p class="modal__window--title">{{ title }}</p>
+      <p class="modal__window--body">{{ body }}</p>
+    </div>
+    <div class="modal__window--controls">
+      <button mat-raised-button (click)="onClose()">Cancel</button>
+      <button mat-raised-button (click)="onConfirm()" color="warn">
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>
