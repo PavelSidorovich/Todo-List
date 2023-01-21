@@ -5,6 +5,7 @@
     class="search-bar__input"
     placeholder="Search for todos"
   />
+  <button mat-button (click)="clearSearch()">Clear</button>
 </div>
 <div [ngSwitch]="fetchStatus">
   <ng-container *ngSwitchCase="availiableFetchStatus.Loading">

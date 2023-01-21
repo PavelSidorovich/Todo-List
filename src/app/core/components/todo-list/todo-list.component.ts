@@ -116,4 +116,9 @@ export class TodoListComponent
     this.page = e.pageIndex;
     this.filterTodos();
   }
+
+  clearSearch(): void {
+    this.todoNameFilter = '';
+    this.filterTodos();
+  }
 }

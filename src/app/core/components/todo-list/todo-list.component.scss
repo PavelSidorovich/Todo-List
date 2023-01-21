@@ -1,10 +1,11 @@
 .search-bar {
   margin: 1em 0;
+  display: flex;
 }
 
 .search-bar__input {
-  outline: none;
   width: 100%;
+  outline: none;
   border: 1px solid;
   border-radius: 10px;
   padding: 0.5em;
