@@ -16,5 +16,5 @@ export abstract class CommonReadService<T> implements ReadService<T> {
     return throwError(() => error);
   }
 
-  abstract fetchAll(): Observable<T>;
+  abstract fetchAll(): Observable<T[]>;
 }

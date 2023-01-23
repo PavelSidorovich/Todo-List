@@ -7,7 +7,7 @@ import { Todo } from '../models/todo';
 import { CommonReadService } from './common-read.service';
 
 @Injectable({ providedIn: 'root' })
-export class TodoService extends CommonReadService<Todo[]> {
+export class TodoService extends CommonReadService<Todo> {
   url: string = API.URL + 'todos';
 
   constructor(private http: HttpClient) {
