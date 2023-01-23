@@ -2,9 +2,17 @@
   <mat-card-content class="todo-card__content">
     <div class="todo-card__content--main">
       <div class="todo-card__checkbox">
-        <mat-checkbox [checked]="todo.completed"></mat-checkbox>
+        <mat-checkbox
+          [checked]="todo.completed"
+          (change)="statusChanged(todo.id)"
+        ></mat-checkbox>
       </div>
-      <span>{{ todo.title }}</span>
+      <span *ngIf="!todo.completed; else done">{{ todo.title }}</span>
+      <ng-template #done>
+        <del>
+          <span>{{ todo.title }}</span>
+        </del>
+      </ng-template>
     </div>
     <button
       mat-icon-button

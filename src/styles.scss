@@ -1,47 +1,4 @@
-@use "@angular/material" as mat;
-@include mat.core();
-
-// light theme
-$light-primary: mat.define-palette(mat.$indigo-palette, 500);
-$light-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$light-warn: mat.define-palette(mat.$red-palette);
-$light-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $light-primary,
-      accent: $light-accent,
-      warn: $light-warn,
-    ),
-    typography:
-      mat.define-typography-config(
-        $font-family: serif,
-      ),
-  )
-);
-
-// dark theme
-$dark-primary: mat.define-palette(mat.$deep-purple-palette, 500);
-$dark-accent: mat.define-palette(mat.$amber-palette, 700);
-$dark-warn: mat.define-palette(mat.$red-palette);
-$dark-theme: mat.define-dark-theme(
-  (
-    color: (
-      primary: $dark-primary,
-      accent: $dark-accent,
-      warn: $dark-warn,
-    ),
-    typography:
-      mat.define-typography-config(
-        $font-family: serif,
-      ),
-  )
-);
-
-@include mat.all-component-themes($light-theme);
-
-.dark-theme--active {
-  @include mat.all-component-themes($dark-theme);
-}
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 * {
   margin: 0;
@@ -67,4 +24,10 @@ a {
 
 .loading-spinner {
   margin: 0 auto;
+}
+
+@media only screen and (min-width: 961px) {
+  main {
+    margin: 2em 15em;
+  }
 }
