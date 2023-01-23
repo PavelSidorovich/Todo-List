@@ -14,12 +14,12 @@ import { PageEvent } from '@angular/material/paginator';
 import { Todo } from '../../models/todo';
 import { TodoService } from '../../services/todo.service';
 import { ModalWindowService } from '../../services/modal-window.service';
-import { FetchStatus } from '../../enums/fetch-status';
 import { CommonComponent } from '../../../shared/components/generic/common-component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { MatSelectChange } from '@angular/material/select';
 import { TodoStatus } from '../../enums/todo-status';
 import { SortOption } from '../../enums/sort-option';
+import { FetchStatus } from 'src/app/shared/enums/fetch-status';
 
 @Component({
   selector: 'app-todo-list',
