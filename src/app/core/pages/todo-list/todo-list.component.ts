@@ -17,6 +17,9 @@ import { ModalWindowService } from '../../services/modal-window.service';
 import { FetchStatus } from '../../enums/fetch-status';
 import { CommonComponent } from '../../../shared/components/generic/common-component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
+import { MatSelectChange } from '@angular/material/select';
+import { TodoStatus } from '../../enums/todo-status';
+import { SortOption } from '../../enums/sort-option';
 
 @Component({
   selector: 'app-todo-list',
@@ -33,7 +36,11 @@ export class TodoListComponent
   totalTodos: number = 0;
   todos: Todo[] = [];
   filteredTodos: Todo[] = [];
-  todoSubsription: Subscription;
+  selectedStatus: TodoStatus = TodoStatus.All;
+  possibleTodoStatuses = TodoStatus;
+  sortOption: SortOption = SortOption.None;
+  possibleSortOptions = SortOption;
+  todoSubscription: Subscription;
   @ViewChild('searchBar') searchComponent: SearchBarComponent;
 
   constructor(
@@ -50,12 +57,12 @@ export class TodoListComponent
   }
 
   ngOnDestroy(): void {
-    this.todoSubsription.unsubscribe();
+    this.todoSubscription.unsubscribe();
   }
 
   fetchTodos(): void {
     this.fetchStatus = FetchStatus.Loading;
-    this.todoSubsription = this.todoService.fetchAll().subscribe({
+    this.todoSubscription = this.todoService.fetchAll().subscribe({
       next: (todos: Todo[]) => {
         this.fetchStatus = FetchStatus.Completed;
         this.todos = todos;
@@ -71,9 +78,22 @@ export class TodoListComponent
   filterTodos(): void {
     const firstIndexOfElement = this.page * this.size;
     const lastIndexOfElement = (this.page + 1) * this.size;
-    const filteredTodos = this.todos.filter((todo) =>
+    let filteredTodos = this.todos.filter((todo) =>
       todo.title.includes(this.searchComponent.filterValue.toLowerCase())
     );
+
+    if (this.selectedStatus !== TodoStatus.All) {
+      filteredTodos = filteredTodos.filter(
+        (todo) =>
+          todo.completed === (this.selectedStatus === TodoStatus.Completed)
+      );
+    }
+    if (this.sortOption !== SortOption.None) {
+      filteredTodos =
+        this.sortOption === SortOption.Asc
+          ? filteredTodos.sort()
+          : filteredTodos.sort().reverse();
+    }
 
     this.totalTodos = filteredTodos.length;
     this.filteredTodos = filteredTodos.slice(
@@ -81,6 +101,26 @@ export class TodoListComponent
       lastIndexOfElement
     );
     this.changeDetectorRef.detectChanges();
+  }
+
+  selectedStatusChanged(selectedStatus: MatSelectChange): void {
+    this.selectedStatus = selectedStatus.value;
+    this.filterTodos();
+  }
+
+  sortOptionChanged(sortOption: MatSelectChange): void {
+    this.sortOption = sortOption.value;
+    this.filterTodos();
+  }
+
+  changeStatus(id: number) {
+    this.filteredTodos.forEach((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+        return;
+      }
+    });
+    this.filterTodos();
   }
 
   deleteTodo(id: number): void {
