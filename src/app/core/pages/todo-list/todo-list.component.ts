@@ -105,6 +105,7 @@ export class TodoListComponent
 
   selectedStatusChanged(selectedStatus: MatSelectChange): void {
     this.selectedStatus = selectedStatus.value;
+    this.page = 0;
     this.filterTodos();
   }
 

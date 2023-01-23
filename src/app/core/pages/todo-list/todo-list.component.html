@@ -50,6 +50,7 @@
         (onDelete)="deleteTodo($event)"
       ></app-todo-card>
       <mat-paginator
+        [pageIndex]="page"
         (page)="handlePageEvent($event)"
         [length]="totalTodos"
         [pageSize]="size"
