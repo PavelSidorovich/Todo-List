@@ -1,0 +1,52 @@
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.user-form {
+  margin-top: 1em;
+}
+
+.user-form__title {
+  margin-bottom: 1em;
+}
+
+.user-form__address > mat-form-field {
+  width: calc(50% - (0.25em));
+  margin-right: 0.5em;
+}
+
+.user-form__address > mat-form-field:last-of-type {
+  margin-right: 0;
+}
+
+.user-form__additional {
+  margin-bottom: 2em;
+}
+
+.user-form__new-field {
+  display: flex;
+}
+
+.user-form__new-field input {
+  border: 1px solid grey;
+  border-radius: 10px 0 0 10px;
+  flex: 4;
+}
+
+.user-form__new-field button {
+  flex: 1;
+}
+
+.user-form__additional button {
+  width: 100%;
+}
+
+.user-form__controls {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-form__controls > button {
+  margin-left: 1em;
+}

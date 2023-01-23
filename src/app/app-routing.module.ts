@@ -6,6 +6,14 @@ const routes: Routes = [
   { path: '', redirectTo: '/todos', pathMatch: 'full' },
   { path: 'todos', component: TodoListComponent },
   {
+    path: 'users/new',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./features/user-control/user-control.module').then(
+        (m) => m.UserControlModule
+      ),
+  },
+  {
     path: 'users',
     loadChildren: () =>
       import('./features/users/users.module').then((m) => m.UsersModule),
