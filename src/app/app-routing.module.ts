@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TodoListComponent } from './core/pages/todo-list/todo-list.component';
+import { PageNotFoundComponent } from './shared/pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/todos', pathMatch: 'full' },
@@ -17,6 +18,10 @@ const routes: Routes = [
     path: 'users',
     loadChildren: () =>
       import('./features/users/users.module').then((m) => m.UsersModule),
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];
 
