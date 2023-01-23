@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { SearchBarComponent } from 'src/app/shared/components/search-bar/search-bar.component';
 import { FetchStatus } from 'src/app/core/enums/fetch-status';
-import { User } from '../../models/user';
+import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 
 @Component({

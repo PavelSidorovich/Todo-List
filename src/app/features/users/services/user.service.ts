@@ -4,7 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { CommonReadService } from 'src/app/core/services/common-read.service';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { API } from 'src/app/core/constants/api-constants';
 import { ReadService } from 'src/app/core/services/read.service';
 
