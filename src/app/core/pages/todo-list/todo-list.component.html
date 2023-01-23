@@ -1,12 +1,4 @@
-<div class="search-bar">
-  <input
-    id="search"
-    [(ngModel)]="todoNameFilter"
-    class="search-bar__input"
-    placeholder="Search for todos"
-  />
-  <button mat-button (click)="clearSearch()">Clear</button>
-</div>
+<app-search-bar #searchBar (filterChanged)="filterTodos()"></app-search-bar>
 <div [ngSwitch]="fetchStatus">
   <ng-container *ngSwitchCase="availiableFetchStatus.Loading">
     <mat-progress-spinner

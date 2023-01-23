@@ -1,12 +1,13 @@
 import {
   Component,
-  OnInit,
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   ViewContainerRef,
+  ViewChild,
+  AfterViewInit,
 } from '@angular/core';
-import { debounceTime, fromEvent, map, Subscription, take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -14,7 +15,8 @@ import { Todo } from '../../models/todo';
 import { TodoService } from '../../services/todo.service';
 import { ModalWindowService } from '../../services/modal-window.service';
 import { FetchStatus } from '../../enums/fetch-status';
-import { CommonComponent } from '../generic/common-component';
+import { CommonComponent } from '../../../shared/components/generic/common-component';
+import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -24,16 +26,15 @@ import { CommonComponent } from '../generic/common-component';
 })
 export class TodoListComponent
   extends CommonComponent
-  implements OnInit, OnDestroy
+  implements OnDestroy, AfterViewInit
 {
   page: number = 0;
   size: number = 20;
   totalTodos: number = 0;
   todos: Todo[] = [];
   filteredTodos: Todo[] = [];
-  todoNameFilter: string = '';
   todoSubsription: Subscription;
-  filterSubscription: Subscription;
+  @ViewChild('searchBar') searchComponent: SearchBarComponent;
 
   constructor(
     private todoService: TodoService,
@@ -44,32 +45,17 @@ export class TodoListComponent
     super();
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.fetchTodos();
-
-    const searchBox = document.querySelector('#search');
-    if (searchBox) {
-      const keyup$ = fromEvent(searchBox, 'keyup');
-
-      this.filterSubscription = keyup$
-        .pipe(
-          map((v: any) => v.currentTarget.value),
-          debounceTime(500)
-        )
-        .subscribe(() => this.filterTodos());
-    }
   }
 
   ngOnDestroy(): void {
     this.todoSubsription.unsubscribe();
-    this.filterSubscription.unsubscribe();
   }
 
   fetchTodos(): void {
     this.fetchStatus = FetchStatus.Loading;
-    const todoObservable$ = this.todoService.fetchAll();
-
-    this.todoSubsription = todoObservable$.subscribe({
+    this.todoSubsription = this.todoService.fetchAll().subscribe({
       next: (todos: Todo[]) => {
         this.fetchStatus = FetchStatus.Completed;
         this.todos = todos;
@@ -86,7 +72,7 @@ export class TodoListComponent
     const firstIndexOfElement = this.page * this.size;
     const lastIndexOfElement = (this.page + 1) * this.size;
     const filteredTodos = this.todos.filter((todo) =>
-      todo.title.includes(this.todoNameFilter.toLowerCase())
+      todo.title.includes(this.searchComponent.filterValue.toLowerCase())
     );
 
     this.totalTodos = filteredTodos.length;
@@ -114,11 +100,6 @@ export class TodoListComponent
 
   handlePageEvent(e: PageEvent): void {
     this.page = e.pageIndex;
-    this.filterTodos();
-  }
-
-  clearSearch(): void {
-    this.todoNameFilter = '';
     this.filterTodos();
   }
 }
