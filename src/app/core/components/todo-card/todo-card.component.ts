@@ -17,10 +17,15 @@ import { Todo } from '../../models/todo';
 export class TodoCardComponent implements OnInit {
   @Input() todo: Todo;
   @Output() onDelete = new EventEmitter<number>();
+  @Output() onStatusChanged = new EventEmitter<number>();
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  statusChanged(id: number): void {
+    this.onStatusChanged.emit(id);
+  }
 
   handleDelete() {
     this.onDelete.emit(this.todo.id);
