@@ -1,3 +1,17 @@
-.filter-options mat-form-field:first-of-type {
-  margin-right: 1em;
+.filter-options {
+  mat-form-field {
+    width: calc(50% - 0.5em);
+
+    &:first-of-type {
+      margin-right: 1em;
+    }
+  }
+}
+
+@media only screen and (min-width: 961px) {
+  .filter-options {
+    mat-form-field {
+      width: unset;
+    }
+  }
 }
