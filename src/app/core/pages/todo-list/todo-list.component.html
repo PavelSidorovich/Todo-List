@@ -19,15 +19,15 @@
       [value]="sortOption"
       (selectionChange)="sortOptionChanged($event)"
     >
-      <mat-option [value]="possibleSortOptions.None">None</mat-option>
-      <mat-option [value]="possibleSortOptions.Asc">Ascending</mat-option>
-      <mat-option [value]="possibleSortOptions.Desc">Descending</mat-option>
+      <mat-option [value]="possibleSortOptions.NONE">None</mat-option>
+      <mat-option [value]="possibleSortOptions.ASC">Ascending</mat-option>
+      <mat-option [value]="possibleSortOptions.DESC">Descending</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
 <div [ngSwitch]="fetchStatus">
-  <ng-container *ngSwitchCase="availiableFetchStatus.Loading">
+  <ng-container *ngSwitchCase="availiableFetchStatus.LOADING">
     <mat-progress-spinner
       class="loading-spinner"
       color="primary"
@@ -35,10 +35,10 @@
     >
     </mat-progress-spinner>
   </ng-container>
-  <ng-container *ngSwitchCase="availiableFetchStatus.Error">
+  <ng-container *ngSwitchCase="availiableFetchStatus.ERROR">
     <p>{{ errorMsg }}</p>
   </ng-container>
-  <ng-container *ngSwitchCase="availiableFetchStatus.Completed">
+  <ng-container *ngSwitchCase="availiableFetchStatus.COMPLETED">
     <ng-container *ngIf="!filteredTodos.length; else todoCards">
       <p>Nothing found</p>
     </ng-container>

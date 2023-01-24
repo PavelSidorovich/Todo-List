@@ -18,8 +18,8 @@ import { CommonComponent } from '../../../shared/components/generic/common-compo
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { MatSelectChange } from '@angular/material/select';
 import { TodoStatus } from '../../enums/todo-status';
-import { SortOption } from '../../enums/sort-option';
-import { FetchStatus } from 'src/app/shared/enums/fetch-status';
+import { SortOption } from '../../../shared/constants/sort-option.enum';
+import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
 
 @Component({
   selector: 'app-todo-list',
@@ -38,7 +38,7 @@ export class TodoListComponent
   filteredTodos: Todo[] = [];
   selectedStatus: TodoStatus = TodoStatus.All;
   possibleTodoStatuses = TodoStatus;
-  sortOption: SortOption = SortOption.None;
+  sortOption: SortOption = SortOption.NONE;
   possibleSortOptions = SortOption;
   todoSubscription: Subscription;
   @ViewChild('searchBar') searchComponent: SearchBarComponent;
@@ -61,15 +61,15 @@ export class TodoListComponent
   }
 
   fetchTodos(): void {
-    this.fetchStatus = FetchStatus.Loading;
+    this.fetchStatus = FetchStatus.LOADING;
     this.todoSubscription = this.todoService.fetchAll().subscribe({
       next: (todos: Todo[]) => {
-        this.fetchStatus = FetchStatus.Completed;
+        this.fetchStatus = FetchStatus.COMPLETED;
         this.todos = todos;
         this.filterTodos();
       },
       error: (error: HttpErrorResponse) => {
-        this.fetchStatus = FetchStatus.Error;
+        this.fetchStatus = FetchStatus.ERROR;
         this.errorMsg = error.message;
       },
     });
@@ -88,9 +88,9 @@ export class TodoListComponent
           todo.completed === (this.selectedStatus === TodoStatus.Completed)
       );
     }
-    if (this.sortOption !== SortOption.None) {
+    if (this.sortOption !== SortOption.NONE) {
       filteredTodos =
-        this.sortOption === SortOption.Asc
+        this.sortOption === SortOption.ASC
           ? filteredTodos.sort()
           : filteredTodos.sort().reverse();
     }

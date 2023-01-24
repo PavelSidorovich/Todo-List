@@ -1,6 +1,6 @@
 <app-search-bar #searchBar (filterChanged)="filterUsers()"></app-search-bar>
 <div [ngSwitch]="fetchStatus">
-  <ng-container *ngSwitchCase="availiableFetchStatus.Loading">
+  <ng-container *ngSwitchCase="availiableFetchStatus.LOADING">
     <mat-progress-spinner
       class="loading-spinner"
       color="primary"
@@ -8,10 +8,10 @@
     >
     </mat-progress-spinner>
   </ng-container>
-  <ng-container *ngSwitchCase="availiableFetchStatus.Error">
+  <ng-container *ngSwitchCase="availiableFetchStatus.ERROR">
     <p>{{ errorMsg }}</p>
   </ng-container>
-  <ng-container *ngSwitchCase="availiableFetchStatus.Completed">
+  <ng-container *ngSwitchCase="availiableFetchStatus.COMPLETED">
     <ng-container *ngIf="!filteredUsers.length; else users">
       <p>Nothing found</p>
     </ng-container>

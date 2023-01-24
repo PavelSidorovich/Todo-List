@@ -1,5 +1,5 @@
 export enum SortOption {
-  None,
-  Asc,
-  Desc,
+  NONE,
+  ASC,
+  DESC,
 }

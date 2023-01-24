@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
-import { FetchStatus } from 'src/app/shared/enums/fetch-status';
+import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 
@@ -39,19 +39,19 @@ export class UserDetailsComponent
     this.userSubscription = this.route.paramMap
       .pipe(
         switchMap((params) => {
-          this.fetchStatus = FetchStatus.Loading;
+          this.fetchStatus = FetchStatus.LOADING;
           return this.userService.fetchById(Number(params.get('id')));
         })
       )
       .subscribe({
         next: (res: User) => {
           this.user = res;
-          this.fetchStatus = FetchStatus.Completed;
+          this.fetchStatus = FetchStatus.COMPLETED;
           this.changeDetectorRef.detectChanges();
         },
         error: (err: HttpErrorResponse) => {
           this.handleFetchError(err);
-          this.fetchStatus = FetchStatus.Error;
+          this.fetchStatus = FetchStatus.ERROR;
           this.changeDetectorRef.detectChanges();
         },
       });

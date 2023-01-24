@@ -2,7 +2,7 @@
   <a [routerLink]="['../']" color="accent" mat-button class="link--back">
     <mat-icon>arrow_back</mat-icon>Back
   </a>
-  <div *ngSwitchCase="availiableFetchStatus.Loading">
+  <div *ngSwitchCase="availiableFetchStatus.LOADING">
     <mat-progress-spinner
       class="loading-spinner"
       color="primary"
@@ -10,7 +10,7 @@
     >
     </mat-progress-spinner>
   </div>
-  <div *ngSwitchCase="availiableFetchStatus.Completed">
+  <div *ngSwitchCase="availiableFetchStatus.COMPLETED">
     <ng-container *ngIf="user">
       <mat-card>
         <mat-card-header>
@@ -48,5 +48,5 @@
       </mat-card>
     </ng-container>
   </div>
-  <div *ngSwitchCase="availiableFetchStatus.Error">{{ errorMsg }}</div>
+  <div *ngSwitchCase="availiableFetchStatus.ERROR">{{ errorMsg }}</div>
 </div>

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { SearchBarComponent } from 'src/app/shared/components/search-bar/search-bar.component';
-import { FetchStatus } from 'src/app/shared/enums/fetch-status';
+import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 
@@ -46,15 +46,15 @@ export class UsersPageComponent
   }
 
   fetchUsers(): void {
-    this.fetchStatus = FetchStatus.Loading;
+    this.fetchStatus = FetchStatus.LOADING;
     this.usersSubsription = this.userService.fetchAll().subscribe({
       next: (data: User[]) => {
         this.users = data;
-        this.fetchStatus = FetchStatus.Completed;
+        this.fetchStatus = FetchStatus.COMPLETED;
         this.filterUsers();
       },
       error: (err: HttpErrorResponse) => {
-        this.fetchStatus = FetchStatus.Error;
+        this.fetchStatus = FetchStatus.ERROR;
         this.errorMsg = err.message;
       },
     });

@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { CommonReadService } from 'src/app/core/services/common-read.service';
 import { User } from '../models/user.model';
-import { API } from 'src/app/core/constants/api-constants';
 import { ReadService } from 'src/app/core/services/read.service';
+import { Api } from 'src/app/shared/constants/api.enum';
 
 export interface IUserService extends ReadService<User> {
   fetchById(id: number): Observable<User>;
@@ -17,7 +17,7 @@ export class UserService
   extends CommonReadService<User>
   implements IUserService
 {
-  url: string = API.URL + 'users';
+  url: string = Api.URL + 'users';
 
   constructor(private http: HttpClient) {
     super();
