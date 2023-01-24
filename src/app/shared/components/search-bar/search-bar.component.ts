@@ -17,12 +17,11 @@ import { debounceTime, fromEvent, map, Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent implements AfterViewInit, OnDestroy {
-  filterValue: string = '';
-  filterSubscription: Subscription;
-  @Output() filterChanged = new EventEmitter<string>();
-  @ViewChild('searchBar') searchBar: ElementRef;
+  public filterValue: string = '';
+  @Output() public filterChanged = new EventEmitter<string>();
 
-  constructor() {}
+  private filterSubscription: Subscription;
+  @ViewChild('searchBar') private searchBar: ElementRef;
 
   ngAfterViewInit(): void {
     this.filterSubscription = fromEvent(this.searchBar.nativeElement, 'keyup')

@@ -24,8 +24,9 @@ export class UserDetailsLayoutComponent
   extends CommonComponent
   implements OnInit, OnDestroy
 {
-  user: User | undefined;
-  userSubscription: Subscription;
+  public user: User | undefined;
+
+  private userSubscription: Subscription;
 
   constructor(
     private userService: UserService,

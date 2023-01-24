@@ -31,17 +31,18 @@ export class TodosLayoutComponent
   extends CommonComponent
   implements OnDestroy, AfterViewInit
 {
-  page: number = 0;
-  size: number = 20;
-  totalTodos: number = 0;
-  todos: Todo[] = [];
-  filteredTodos: Todo[] = [];
-  selectedStatus: TodoStatus = TodoStatus.ALL;
-  possibleTodoStatuses = TodoStatus;
-  sortOption: SortOption = SortOption.NONE;
-  possibleSortOptions = SortOption;
-  todoSubscription: Subscription;
-  @ViewChild('searchBar') searchComponent: SearchBarComponent;
+  public page: number = 0;
+  public size: number = 20;
+  public totalTodos: number = 0;
+  public filteredTodos: Todo[] = [];
+  public selectedStatus: TodoStatus = TodoStatus.ALL;
+  public possibleTodoStatuses = TodoStatus;
+  public sortOption: SortOption = SortOption.NONE;
+  public possibleSortOptions = SortOption;
+
+  private todos: Todo[] = [];
+  private todoSubscription: Subscription;
+  @ViewChild('searchBar') private searchComponent: SearchBarComponent;
 
   constructor(
     private todoService: TodoService,

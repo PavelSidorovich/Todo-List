@@ -14,9 +14,9 @@ import { Todo } from '../todos-layout/todo.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoCardComponent {
-  @Input() todo: Todo;
-  @Output() onDelete = new EventEmitter<number>();
-  @Output() onStatusChanged = new EventEmitter<number>();
+  @Input() public todo: Todo;
+  @Output() public onDelete = new EventEmitter<number>();
+  @Output() public onStatusChanged = new EventEmitter<number>();
 
   statusChanged(id: number): void {
     this.onStatusChanged.emit(id);

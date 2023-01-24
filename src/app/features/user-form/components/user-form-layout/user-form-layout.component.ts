@@ -13,9 +13,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormLayoutComponent {
-  dynamicFields: Map<string, any> = new Map();
-  dynamicFieldControl = this.formBuilder.control('');
-  userForm = this.formBuilder.group({
+  public dynamicFieldControl = this.formBuilder.control('');
+  public userForm = this.formBuilder.group({
     name: ['', Validators.required],
     username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -25,6 +24,8 @@ export class UserFormLayoutComponent {
     }),
     additional: this.formBuilder.group({}),
   });
+
+  private dynamicFields: Map<string, any> = new Map();
 
   constructor(private formBuilder: FormBuilder) {}
 

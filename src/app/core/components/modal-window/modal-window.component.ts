@@ -13,10 +13,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalWindowComponent {
-  @Input() title: string = '';
-  @Input() body: string = '';
-  @Output() closeEvent = new EventEmitter();
-  @Output() confirmEvent = new EventEmitter();
+  @Input() public title: string = '';
+  @Input() public body: string = '';
+  @Output() public closeEvent = new EventEmitter();
+  @Output() public confirmEvent = new EventEmitter();
 
   onClose(): void {
     this.closeEvent.emit();

@@ -25,10 +25,11 @@ export class UsersLayoutComponent
   extends CommonComponent
   implements AfterViewInit, OnDestroy
 {
-  users: User[] = [];
-  filteredUsers: User[] = [];
-  usersSubsription: Subscription;
-  @ViewChild('searchBar') searchComponent: SearchBarComponent;
+  public filteredUsers: User[] = [];
+
+  private users: User[] = [];
+  private usersSubsription: Subscription;
+  @ViewChild('searchBar') private searchComponent: SearchBarComponent;
 
   constructor(
     private userService: UserService,
