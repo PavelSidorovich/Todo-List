@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Todo } from '../models/todo';
+import { Todo } from '../components/todos-layout/todo.interface';
 import { CommonReadService } from './common-read.service';
 import { Api } from 'src/app/shared/constants/api.enum';
 

@@ -11,7 +11,7 @@ import { Subscription, take } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 
-import { Todo } from '../../models/todo';
+import { Todo } from './todo.interface';
 import { TodoService } from '../../services/todo.service';
 import { ModalWindowService } from '../../services/modal-window.service';
 import { CommonComponent } from '../../../shared/components/generic/common-component';

@@ -6,7 +6,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Todo } from '../../models/todo';
+import { Todo } from '../todos-layout/todo.interface';
 
 @Component({
   selector: 'app-todo-card',
