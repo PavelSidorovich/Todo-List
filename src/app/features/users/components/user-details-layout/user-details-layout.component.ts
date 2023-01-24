@@ -36,7 +36,7 @@ export class UserDetailsLayoutComponent
     super();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.userSubscription = this.route.paramMap
       .pipe(
         switchMap((params) => {
@@ -58,11 +58,11 @@ export class UserDetailsLayoutComponent
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
   }
 
-  handleFetchError(error: HttpErrorResponse): void {
+  private handleFetchError(error: HttpErrorResponse): void {
     this.errorMsg =
       error.status === 404
         ? "Sorry! Can't find user with such id."

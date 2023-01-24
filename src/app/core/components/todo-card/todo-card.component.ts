@@ -18,11 +18,11 @@ export class TodoCardComponent {
   @Output() public onDelete = new EventEmitter<number>();
   @Output() public onStatusChanged = new EventEmitter<number>();
 
-  statusChanged(id: number): void {
+  public statusChanged(id: number): void {
     this.onStatusChanged.emit(id);
   }
 
-  handleDelete() {
+  public handleDelete(): void {
     this.onDelete.emit(this.todo.id);
   }
 }

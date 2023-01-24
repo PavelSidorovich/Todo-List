@@ -18,11 +18,11 @@ export class ModalWindowComponent {
   @Output() public closeEvent = new EventEmitter();
   @Output() public confirmEvent = new EventEmitter();
 
-  onClose(): void {
+  public onClose(): void {
     this.closeEvent.emit();
   }
 
-  onConfirm(): void {
+  public onConfirm(): void {
     this.confirmEvent.emit();
   }
 }

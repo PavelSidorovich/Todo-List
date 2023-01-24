@@ -53,11 +53,11 @@ export class UserFormLayoutComponent {
     return this.userForm.get('additional') as FormGroup;
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     console.log(this.userForm.getRawValue());
   }
 
-  addFormField(fieldName: string): void {
+  public addFormField(fieldName: string): void {
     if (!this.dynamicFields.has(fieldName)) {
       const formControl = this.formBuilder.control('', Validators.required);
       this.dynamicFields.set(fieldName, formControl);
@@ -66,11 +66,11 @@ export class UserFormLayoutComponent {
     }
   }
 
-  getAdditionalFieldNames(): string[] {
+  public getAdditionalFieldNames(): string[] {
     return Array.from(this.dynamicFields.keys());
   }
 
-  getAdditionalControlByName(controlName: string): FormControl<any> {
+  public getAdditionalControlByName(controlName: string): FormControl<any> {
     return this.dynamicFields.get(controlName);
   }
 }

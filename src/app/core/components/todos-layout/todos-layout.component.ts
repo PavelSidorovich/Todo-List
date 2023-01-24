@@ -53,15 +53,15 @@ export class TodosLayoutComponent
     super();
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.fetchTodos();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.todoSubscription.unsubscribe();
   }
 
-  fetchTodos(): void {
+  private fetchTodos(): void {
     this.fetchStatus = FetchStatus.LOADING;
     this.todoSubscription = this.todoService.fetchAll().subscribe({
       next: (todos: Todo[]) => {
@@ -76,7 +76,7 @@ export class TodosLayoutComponent
     });
   }
 
-  filterTodos(): void {
+  public filterTodos(): void {
     const firstIndexOfElement = this.page * this.size;
     const lastIndexOfElement = (this.page + 1) * this.size;
     let filteredTodos = this.todos.filter((todo) =>
@@ -104,18 +104,18 @@ export class TodosLayoutComponent
     this.changeDetectorRef.detectChanges();
   }
 
-  selectedStatusChanged(selectedStatus: MatSelectChange): void {
+  public selectedStatusChanged(selectedStatus: MatSelectChange): void {
     this.selectedStatus = selectedStatus.value;
     this.page = 0;
     this.filterTodos();
   }
 
-  sortOptionChanged(sortOption: MatSelectChange): void {
+  public sortOptionChanged(sortOption: MatSelectChange): void {
     this.sortOption = sortOption.value;
     this.filterTodos();
   }
 
-  changeStatus(id: number) {
+  public changeStatus(id: number): void {
     this.filteredTodos.forEach((todo) => {
       if (todo.id === id) {
         todo.completed = !todo.completed;
@@ -125,7 +125,7 @@ export class TodosLayoutComponent
     this.filterTodos();
   }
 
-  deleteTodo(id: number): void {
+  public deleteTodo(id: number): void {
     const modalTitle = 'Delete confirmation';
     const modalBody = 'Do you really want to delete todo?';
 
@@ -140,7 +140,7 @@ export class TodosLayoutComponent
       });
   }
 
-  handlePageEvent(e: PageEvent): void {
+  public handlePageEvent(e: PageEvent): void {
     this.page = e.pageIndex;
     this.filterTodos();
   }

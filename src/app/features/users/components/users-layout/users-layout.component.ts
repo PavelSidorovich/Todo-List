@@ -38,15 +38,15 @@ export class UsersLayoutComponent
     super();
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.fetchUsers();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.usersSubsription.unsubscribe();
   }
 
-  fetchUsers(): void {
+  private fetchUsers(): void {
     this.fetchStatus = FetchStatus.LOADING;
     this.usersSubsription = this.userService.fetchAll().subscribe({
       next: (data: User[]) => {
@@ -61,7 +61,7 @@ export class UsersLayoutComponent
     });
   }
 
-  filterUsers(): void {
+  public filterUsers(): void {
     const filter = this.searchComponent.filterValue.toLowerCase();
 
     this.filteredUsers = this.users.filter((user) => {
