@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { TodosLayoutComponent } from './core/components/todos-layout/todos-layout.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TodoCardComponent } from './core/components/todo-card/todo-card.component';
-import { MaterialModule } from './material.module';
 import { ModalWindowComponent } from './core/components/modal-window/modal-window.component';
 import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './core/components/header/header.component';
@@ -31,7 +30,6 @@ import { PageNotFoundLayoutComponent } from './core/components/page-not-found-la
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MaterialModule,
     SharedModule,
   ],
   providers: [],
