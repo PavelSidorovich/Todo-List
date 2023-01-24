@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef,
   ViewContainerRef,
   ViewChild,
-  AfterViewInit,
+  OnInit,
 } from '@angular/core';
 import { Subscription, take } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,7 +29,7 @@ import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
 })
 export class TodosLayoutComponent
   extends CommonComponent
-  implements OnDestroy, AfterViewInit
+  implements OnInit, OnDestroy
 {
   public page: number = 0;
   public size: number = 20;
@@ -53,7 +53,7 @@ export class TodosLayoutComponent
     super();
   }
 
-  public ngAfterViewInit(): void {
+  public ngOnInit(): void {
     this._fetchTodos();
   }
 
@@ -67,7 +67,9 @@ export class TodosLayoutComponent
       next: (todos: Todo[]) => {
         this.fetchStatus = FetchStatus.COMPLETED;
         this._todos = todos;
-        this.filterTodos();
+        this.filteredTodos = todos;
+        this._applyPagination();
+        this._changeDetectorRef.detectChanges();
       },
       error: (error: HttpErrorResponse) => {
         this.fetchStatus = FetchStatus.ERROR;
@@ -77,31 +79,47 @@ export class TodosLayoutComponent
   }
 
   public filterTodos(): void {
-    const firstIndexOfElement = this.page * this.size;
-    const lastIndexOfElement = (this.page + 1) * this.size;
-    let filteredTodos = this._todos.filter((todo) =>
+    this.filteredTodos = this._todos;
+    this._applySearch();
+    this._applyStatusFilter();
+    this._applySorting();
+    this._applyPagination();
+    this._changeDetectorRef.detectChanges();
+  }
+
+  private _applySearch(): void {
+    this.filteredTodos = this._todos.filter((todo) =>
       todo.title.includes(this._searchComponent.filterValue.toLowerCase())
     );
+  }
 
+  private _applyStatusFilter(): void {
     if (this.selectedStatus !== TodoStatus.ALL) {
-      filteredTodos = filteredTodos.filter(
+      this.filteredTodos = this.filteredTodos.filter(
         (todo) =>
           todo.completed === (this.selectedStatus === TodoStatus.COMPLETED)
       );
     }
-    if (this.sortOption !== SortOption.NONE) {
-      filteredTodos =
-        this.sortOption === SortOption.ASC
-          ? filteredTodos.sort()
-          : filteredTodos.sort().reverse();
-    }
+  }
 
-    this.totalTodos = filteredTodos.length;
-    this.filteredTodos = filteredTodos.slice(
+  private _applySorting(): void {
+    if (this.sortOption !== SortOption.NONE) {
+      this.filteredTodos =
+        this.sortOption === SortOption.ASC
+          ? this.filteredTodos.sort()
+          : this.filteredTodos.sort().reverse();
+    }
+  }
+
+  private _applyPagination(): void {
+    const firstIndexOfElement = this.page * this.size;
+    const lastIndexOfElement = (this.page + 1) * this.size;
+
+    this.totalTodos = this.filteredTodos.length;
+    this.filteredTodos = this.filteredTodos.slice(
       firstIndexOfElement,
       lastIndexOfElement
     );
-    this._changeDetectorRef.detectChanges();
   }
 
   public selectedStatusChanged(selectedStatus: MatSelectChange): void {
@@ -135,7 +153,7 @@ export class TodosLayoutComponent
       .subscribe({
         next: () => {
           this._todos = this._todos.filter((todo) => todo.id !== id);
-          this.filterTodos();
+          this._changeDetectorRef.detectChanges();
         },
       });
   }
