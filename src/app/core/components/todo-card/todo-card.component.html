@@ -1,0 +1,26 @@
+<mat-card class="todo-card">
+  <mat-card-content class="todo-card__content">
+    <div class="todo-card__content--main">
+      <div class="todo-card__checkbox">
+        <mat-checkbox
+          [checked]="todo.completed"
+          (change)="statusChanged(todo.id)"
+        ></mat-checkbox>
+      </div>
+      <span *ngIf="!todo.completed; else done">{{ todo.title }}</span>
+      <ng-template #done>
+        <del>
+          <span>{{ todo.title }}</span>
+        </del>
+      </ng-template>
+    </div>
+    <button
+      mat-icon-button
+      color="warn"
+      class="todo-card__btn--delete"
+      (click)="handleDelete()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>

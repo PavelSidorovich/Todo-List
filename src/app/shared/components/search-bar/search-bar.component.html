@@ -1,0 +1,9 @@
+<div class="search-bar">
+  <input
+    #searchBar
+    [(ngModel)]="filterValue"
+    class="search-bar__input"
+    placeholder="Search"
+  />
+  <button mat-button (click)="clearSearch()">Clear</button>
+</div>
