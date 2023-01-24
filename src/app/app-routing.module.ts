@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TodoListComponent } from './core/components/todo-list/todo-list.component';
+import { TodosLayoutComponent } from './core/components/todos-layout/todos-layout.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/todos', pathMatch: 'full' },
-  { path: 'todos', component: TodoListComponent },
+  { path: 'todos', component: TodosLayoutComponent },
   {
     path: 'users/new',
     pathMatch: 'full',

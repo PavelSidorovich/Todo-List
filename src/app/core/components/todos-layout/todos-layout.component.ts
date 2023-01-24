@@ -22,12 +22,12 @@ import { SortOption } from '../../../shared/constants/sort-option.enum';
 import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss'],
+  selector: 'app-todos',
+  templateUrl: './todos-layout.component.html',
+  styleUrls: ['./todos-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoListComponent
+export class TodosLayoutComponent
   extends CommonComponent
   implements OnDestroy, AfterViewInit
 {
