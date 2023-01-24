@@ -70,7 +70,11 @@
         [formControl]="dynamicFieldControl"
         placeholder="Field name"
       />
-      <button mat-raised-button (click)="addFormField(newField.value)">
+      <button
+        type="button"
+        mat-raised-button
+        (click)="addFormField(newField.value)"
+      >
         + Add field
       </button>
     </div>
