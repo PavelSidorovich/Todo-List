@@ -17,7 +17,7 @@ import { ModalWindowService } from '../../services/modal-window.service';
 import { CommonComponent } from '../../../shared/components/generic/common-component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { MatSelectChange } from '@angular/material/select';
-import { TodoStatus } from '../../enums/todo-status';
+import { TodoStatus } from './todo-status.enum';
 import { SortOption } from '../../../shared/constants/sort-option.enum';
 import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
 
@@ -36,7 +36,7 @@ export class TodoListComponent
   totalTodos: number = 0;
   todos: Todo[] = [];
   filteredTodos: Todo[] = [];
-  selectedStatus: TodoStatus = TodoStatus.All;
+  selectedStatus: TodoStatus = TodoStatus.ALL;
   possibleTodoStatuses = TodoStatus;
   sortOption: SortOption = SortOption.NONE;
   possibleSortOptions = SortOption;
@@ -82,10 +82,10 @@ export class TodoListComponent
       todo.title.includes(this.searchComponent.filterValue.toLowerCase())
     );
 
-    if (this.selectedStatus !== TodoStatus.All) {
+    if (this.selectedStatus !== TodoStatus.ALL) {
       filteredTodos = filteredTodos.filter(
         (todo) =>
-          todo.completed === (this.selectedStatus === TodoStatus.Completed)
+          todo.completed === (this.selectedStatus === TodoStatus.COMPLETED)
       );
     }
     if (this.sortOption !== SortOption.NONE) {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TodoListComponent } from './core/pages/todo-list/todo-list.component';
-import { PageNotFoundComponent } from './shared/pages/page-not-found/page-not-found.component';
+import { TodoListComponent } from './core/components/todo-list/todo-list.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/todos', pathMatch: 'full' },

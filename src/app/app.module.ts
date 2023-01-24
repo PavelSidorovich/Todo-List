@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { TodoListComponent } from './core/pages/todo-list/todo-list.component';
+import { TodoListComponent } from './core/components/todo-list/todo-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TodoCardComponent } from './core/components/todo-card/todo-card.component';
 import { MaterialModule } from './material.module';
