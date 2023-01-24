@@ -11,8 +11,8 @@ import { Subscription, switchMap } from 'rxjs';
 
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
-import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
+import { User } from '../users-page/user.interface';
 
 @Component({
   selector: 'app-user-details',

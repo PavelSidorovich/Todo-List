@@ -12,8 +12,8 @@ import { Subscription } from 'rxjs';
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { SearchBarComponent } from 'src/app/shared/components/search-bar/search-bar.component';
 import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
-import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
+import { User } from './user.interface';
 
 @Component({
   selector: 'app-users-page',

@@ -4,9 +4,9 @@ import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { CommonReadService } from 'src/app/core/services/common-read.service';
-import { User } from '../models/user.model';
 import { ReadService } from 'src/app/core/services/read.service';
 import { Api } from 'src/app/shared/constants/api.enum';
+import { User } from '../components/users-page/user.interface';
 
 export interface IUserService extends ReadService<User> {
   fetchById(id: number): Observable<User>;
