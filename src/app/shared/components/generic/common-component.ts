@@ -1,4 +1,4 @@
-import { FetchStatus } from '../../constants/fetch-status.enum';
+import { FetchStatus } from '../../enums/fetch-status.enum';
 
 export abstract class CommonComponent {
   availiableFetchStatus = FetchStatus;

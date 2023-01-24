@@ -18,8 +18,8 @@ import { CommonComponent } from '../../../shared/components/generic/common-compo
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { MatSelectChange } from '@angular/material/select';
 import { TodoStatus } from './todo-status.enum';
-import { SortOption } from '../../../shared/constants/sort-option.enum';
-import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
+import { SortOption } from '../../../shared/enums/sort-option.enum';
+import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
 
 @Component({
   selector: 'app-todos',

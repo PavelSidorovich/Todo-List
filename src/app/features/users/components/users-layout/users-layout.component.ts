@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { SearchBarComponent } from 'src/app/shared/components/search-bar/search-bar.component';
-import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
+import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
 import { UserService } from '../../services/user.service';
 import { User } from './user.interface';
 

@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
-import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
+import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
 import { UserService } from '../../services/user.service';
 import { User } from '../users-layout/user.interface';
 
