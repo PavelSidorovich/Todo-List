@@ -65,8 +65,6 @@ export class NewUserComponent implements OnInit {
       this.additional.addControl(fieldName, formControl);
       this.dynamicFieldControl.setValue('');
     }
-
-    console.log(this.additional);
   }
 
   getAdditionalFieldNames(): string[] {
