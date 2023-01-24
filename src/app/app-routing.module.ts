@@ -10,8 +10,8 @@ const routes: Routes = [
     path: 'users/new',
     pathMatch: 'full',
     loadChildren: () =>
-      import('./features/user-control/user-control.module').then(
-        (m) => m.UserControlModule
+      import('./features/user-form/user-form.module').then(
+        (m) => m.UserFormModule
       ),
   },
   {

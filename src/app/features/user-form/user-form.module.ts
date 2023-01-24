@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewUserComponent } from './components/new-user/new-user.component';
-import { UserControlRoutingModule } from './user-control-routing.module';
+import { UserFormRoutingModule } from './user-form-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
+import { UserFormLayoutComponent } from './components/user-form/user-form-layout.component';
 
 @NgModule({
-  declarations: [NewUserComponent],
+  declarations: [UserFormLayoutComponent],
   imports: [
     CommonModule,
-    UserControlRoutingModule,
+    UserFormRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
   ],
 })
-export class UserControlModule {}
+export class UserFormModule {}

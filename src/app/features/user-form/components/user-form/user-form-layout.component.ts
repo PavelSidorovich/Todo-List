@@ -8,11 +8,11 @@ import {
 
 @Component({
   selector: 'app-new-user',
-  templateUrl: './new-user.component.html',
-  styleUrls: ['./new-user.component.scss'],
+  templateUrl: './user-form-layout.component.html',
+  styleUrls: ['./user-form-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewUserComponent implements OnInit {
+export class UserFormLayoutComponent implements OnInit {
   dynamicFields: Map<string, any> = new Map();
   dynamicFieldControl = this.formBuilder.control('');
   userForm = this.formBuilder.group({
