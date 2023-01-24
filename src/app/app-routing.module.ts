@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TodosLayoutComponent } from './core/components/todos-layout/todos-layout.component';
-import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { PageNotFoundLayoutComponent } from './core/components/page-not-found-layout/page-not-found-layout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/todos', pathMatch: 'full' },
@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: PageNotFoundComponent,
+    component: PageNotFoundLayoutComponent,
   },
 ];
 
