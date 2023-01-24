@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -12,7 +12,7 @@ import {
   styleUrls: ['./user-form-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserFormLayoutComponent implements OnInit {
+export class UserFormLayoutComponent {
   dynamicFields: Map<string, any> = new Map();
   dynamicFieldControl = this.formBuilder.control('');
   userForm = this.formBuilder.group({
@@ -27,8 +27,6 @@ export class UserFormLayoutComponent implements OnInit {
   });
 
   constructor(private formBuilder: FormBuilder) {}
-
-  ngOnInit(): void {}
 
   get name(): FormControl {
     return this.userForm.get('name') as FormControl;
