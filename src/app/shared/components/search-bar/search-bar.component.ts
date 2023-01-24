@@ -20,11 +20,11 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
   public filterValue: string = '';
   @Output() public filterChanged = new EventEmitter<string>();
 
-  private filterSubscription: Subscription;
-  @ViewChild('searchBar') private searchBar: ElementRef;
+  private _filterSubscription: Subscription;
+  @ViewChild('searchBar') private _searchBar: ElementRef;
 
   public ngAfterViewInit(): void {
-    this.filterSubscription = fromEvent(this.searchBar.nativeElement, 'keyup')
+    this._filterSubscription = fromEvent(this._searchBar.nativeElement, 'keyup')
       .pipe(
         map((v: any) => v.currentTarget.value),
         debounceTime(500)
@@ -35,7 +35,7 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.filterSubscription.unsubscribe();
+    this._filterSubscription.unsubscribe();
   }
 
   public clearSearch(): void {

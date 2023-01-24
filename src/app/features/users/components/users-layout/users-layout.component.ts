@@ -27,30 +27,30 @@ export class UsersLayoutComponent
 {
   public filteredUsers: User[] = [];
 
-  private users: User[] = [];
-  private usersSubsription: Subscription;
-  @ViewChild('searchBar') private searchComponent: SearchBarComponent;
+  private _users: User[] = [];
+  private _usersSubsription: Subscription;
+  @ViewChild('searchBar') private _searchComponent: SearchBarComponent;
 
   constructor(
-    private userService: UserService,
-    private changeDetectorRef: ChangeDetectorRef
+    private _userService: UserService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {
     super();
   }
 
   public ngAfterViewInit(): void {
-    this.fetchUsers();
+    this._fetchUsers();
   }
 
   public ngOnDestroy(): void {
-    this.usersSubsription.unsubscribe();
+    this._usersSubsription.unsubscribe();
   }
 
-  private fetchUsers(): void {
+  private _fetchUsers(): void {
     this.fetchStatus = FetchStatus.LOADING;
-    this.usersSubsription = this.userService.fetchAll().subscribe({
+    this._usersSubsription = this._userService.fetchAll().subscribe({
       next: (data: User[]) => {
-        this.users = data;
+        this._users = data;
         this.fetchStatus = FetchStatus.COMPLETED;
         this.filterUsers();
       },
@@ -62,15 +62,15 @@ export class UsersLayoutComponent
   }
 
   public filterUsers(): void {
-    const filter = this.searchComponent.filterValue.toLowerCase();
+    const filter = this._searchComponent.filterValue.toLowerCase();
 
-    this.filteredUsers = this.users.filter((user) => {
+    this.filteredUsers = this._users.filter((user) => {
       return (
         user.name.includes(filter) ||
         user.username.includes(filter) ||
         user.email.includes(filter)
       );
     });
-    this.changeDetectorRef.detectChanges();
+    this._changeDetectorRef.detectChanges();
   }
 }

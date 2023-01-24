@@ -13,21 +13,21 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormLayoutComponent {
-  public dynamicFieldControl = this.formBuilder.control('');
-  public userForm = this.formBuilder.group({
+  public dynamicFieldControl = this._formBuilder.control('');
+  public userForm = this._formBuilder.group({
     name: ['', Validators.required],
     username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    address: this.formBuilder.group({
+    address: this._formBuilder.group({
       street: ['', Validators.required],
       city: ['', Validators.required],
     }),
-    additional: this.formBuilder.group({}),
+    additional: this._formBuilder.group({}),
   });
 
-  private dynamicFields: Map<string, any> = new Map();
+  private _dynamicFields: Map<string, any> = new Map();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder) {}
 
   get name(): FormControl {
     return this.userForm.get('name') as FormControl;
@@ -58,19 +58,19 @@ export class UserFormLayoutComponent {
   }
 
   public addFormField(fieldName: string): void {
-    if (!this.dynamicFields.has(fieldName)) {
-      const formControl = this.formBuilder.control('', Validators.required);
-      this.dynamicFields.set(fieldName, formControl);
+    if (!this._dynamicFields.has(fieldName)) {
+      const formControl = this._formBuilder.control('', Validators.required);
+      this._dynamicFields.set(fieldName, formControl);
       this.additional.addControl(fieldName, formControl);
       this.dynamicFieldControl.setValue('');
     }
   }
 
   public getAdditionalFieldNames(): string[] {
-    return Array.from(this.dynamicFields.keys());
+    return Array.from(this._dynamicFields.keys());
   }
 
   public getAdditionalControlByName(controlName: string): FormControl<any> {
-    return this.dynamicFields.get(controlName);
+    return this._dynamicFields.get(controlName);
   }
 }

@@ -26,43 +26,43 @@ export class UserDetailsLayoutComponent
 {
   public user: User | undefined;
 
-  private userSubscription: Subscription;
+  private _userSubscription: Subscription;
 
   constructor(
-    private userService: UserService,
-    private route: ActivatedRoute,
-    private changeDetectorRef: ChangeDetectorRef
+    private _userService: UserService,
+    private _route: ActivatedRoute,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.userSubscription = this.route.paramMap
+    this._userSubscription = this._route.paramMap
       .pipe(
         switchMap((params) => {
           this.fetchStatus = FetchStatus.LOADING;
-          return this.userService.fetchById(Number(params.get('id')));
+          return this._userService.fetchById(Number(params.get('id')));
         })
       )
       .subscribe({
         next: (res: User) => {
           this.user = res;
           this.fetchStatus = FetchStatus.COMPLETED;
-          this.changeDetectorRef.detectChanges();
+          this._changeDetectorRef.detectChanges();
         },
         error: (err: HttpErrorResponse) => {
-          this.handleFetchError(err);
+          this._handleFetchError(err);
           this.fetchStatus = FetchStatus.ERROR;
-          this.changeDetectorRef.detectChanges();
+          this._changeDetectorRef.detectChanges();
         },
       });
   }
 
   public ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
+    this._userSubscription.unsubscribe();
   }
 
-  private handleFetchError(error: HttpErrorResponse): void {
+  private _handleFetchError(error: HttpErrorResponse): void {
     this.errorMsg =
       error.status === 404
         ? "Sorry! Can't find user with such id."

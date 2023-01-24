@@ -40,33 +40,33 @@ export class TodosLayoutComponent
   public sortOption: SortOption = SortOption.NONE;
   public possibleSortOptions = SortOption;
 
-  private todos: Todo[] = [];
-  private todoSubscription: Subscription;
-  @ViewChild('searchBar') private searchComponent: SearchBarComponent;
+  private _todos: Todo[] = [];
+  private _todoSubscription: Subscription;
+  @ViewChild('searchBar') private _searchComponent: SearchBarComponent;
 
   constructor(
-    private todoService: TodoService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private viewContainerRef: ViewContainerRef,
-    private modalService: ModalWindowService
+    private _todoService: TodoService,
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _viewContainerRef: ViewContainerRef,
+    private _modalService: ModalWindowService
   ) {
     super();
   }
 
   public ngAfterViewInit(): void {
-    this.fetchTodos();
+    this._fetchTodos();
   }
 
   public ngOnDestroy(): void {
-    this.todoSubscription.unsubscribe();
+    this._todoSubscription.unsubscribe();
   }
 
-  private fetchTodos(): void {
+  private _fetchTodos(): void {
     this.fetchStatus = FetchStatus.LOADING;
-    this.todoSubscription = this.todoService.fetchAll().subscribe({
+    this._todoSubscription = this._todoService.fetchAll().subscribe({
       next: (todos: Todo[]) => {
         this.fetchStatus = FetchStatus.COMPLETED;
-        this.todos = todos;
+        this._todos = todos;
         this.filterTodos();
       },
       error: (error: HttpErrorResponse) => {
@@ -79,8 +79,8 @@ export class TodosLayoutComponent
   public filterTodos(): void {
     const firstIndexOfElement = this.page * this.size;
     const lastIndexOfElement = (this.page + 1) * this.size;
-    let filteredTodos = this.todos.filter((todo) =>
-      todo.title.includes(this.searchComponent.filterValue.toLowerCase())
+    let filteredTodos = this._todos.filter((todo) =>
+      todo.title.includes(this._searchComponent.filterValue.toLowerCase())
     );
 
     if (this.selectedStatus !== TodoStatus.ALL) {
@@ -101,7 +101,7 @@ export class TodosLayoutComponent
       firstIndexOfElement,
       lastIndexOfElement
     );
-    this.changeDetectorRef.detectChanges();
+    this._changeDetectorRef.detectChanges();
   }
 
   public selectedStatusChanged(selectedStatus: MatSelectChange): void {
@@ -129,12 +129,12 @@ export class TodosLayoutComponent
     const modalTitle = 'Delete confirmation';
     const modalBody = 'Do you really want to delete todo?';
 
-    this.modalService
-      .openModal(this.viewContainerRef, modalTitle, modalBody)
+    this._modalService
+      .openModal(this._viewContainerRef, modalTitle, modalBody)
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.todos = this.todos.filter((todo) => todo.id !== id);
+          this._todos = this._todos.filter((todo) => todo.id !== id);
           this.filterTodos();
         },
       });
