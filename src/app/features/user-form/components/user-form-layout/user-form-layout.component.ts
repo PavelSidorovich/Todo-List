@@ -29,27 +29,15 @@ export class UserFormLayoutComponent {
 
   constructor(private _formBuilder: FormBuilder) {}
 
-  get name(): FormControl {
-    return this.userForm.get('name') as FormControl;
+  public getUserFormControl(controlName: string): FormControl {
+    return this.userForm.get(controlName) as FormControl;
   }
 
-  get username(): FormControl {
-    return this.userForm.get('username') as FormControl;
+  public getAddressControl(controlName: string): FormControl {
+    return this.userForm.get('address')?.get(controlName) as FormControl;
   }
 
-  get street(): FormControl {
-    return this.userForm.get('address')?.get('street') as FormControl;
-  }
-
-  get city(): FormControl {
-    return this.userForm.get('address')?.get('city') as FormControl;
-  }
-
-  get email(): FormControl {
-    return this.userForm.get('email') as FormControl;
-  }
-
-  get additional(): FormGroup {
+  public get additional(): FormGroup {
     return this.userForm.get('additional') as FormGroup;
   }
 
