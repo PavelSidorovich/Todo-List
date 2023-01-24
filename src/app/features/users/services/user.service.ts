@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonReadService } from 'src/app/core/services/common-read.service';
 import { ReadService } from 'src/app/core/services/read.service';
 import { Api } from 'src/app/shared/constants/api.enum';
-import { User } from '../components/users-page/user.interface';
+import { User } from '../components/users-layout/user.interface';
 
 export interface IUserService extends ReadService<User> {
   fetchById(id: number): Observable<User>;

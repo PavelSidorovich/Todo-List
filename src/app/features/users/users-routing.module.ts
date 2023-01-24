@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { UsersPageComponent } from './components/users-page/users-page.component';
+import { UserDetailsLayoutComponent } from './components/user-details-layout/user-details-layout.component';
+import { UsersLayoutComponent } from './components/users-layout/users-layout.component';
 
 const routes: Routes = [
-  { path: '', component: UsersPageComponent },
-  { path: ':id', component: UserDetailsComponent },
+  { path: '', component: UsersLayoutComponent },
+  { path: ':id', component: UserDetailsLayoutComponent },
 ];
 
 @NgModule({

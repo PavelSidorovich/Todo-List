@@ -12,15 +12,15 @@ import { Subscription, switchMap } from 'rxjs';
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { FetchStatus } from 'src/app/shared/constants/fetch-status.enum';
 import { UserService } from '../../services/user.service';
-import { User } from '../users-page/user.interface';
+import { User } from '../users-layout/user.interface';
 
 @Component({
   selector: 'app-user-details',
-  templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.scss'],
+  templateUrl: './user-details-layout.component.html',
+  styleUrls: ['./user-details-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserDetailsComponent
+export class UserDetailsLayoutComponent
   extends CommonComponent
   implements OnInit, OnDestroy
 {

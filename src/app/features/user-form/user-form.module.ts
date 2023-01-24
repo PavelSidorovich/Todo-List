@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserFormRoutingModule } from './user-form-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
-import { UserFormLayoutComponent } from './components/user-form/user-form-layout.component';
+import { UserFormLayoutComponent } from './components/user-form-layout/user-form-layout.component';
 
 @NgModule({
   declarations: [UserFormLayoutComponent],
