@@ -9,13 +9,13 @@ import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-respon
 
 @Injectable({ providedIn: 'root' })
 export class TodoService extends RequestService implements ReadService<Todo> {
-  url: string = Api.URL + 'todos';
+  private _url: string = Api.URL + 'todos';
 
   constructor(http: HttpClient) {
     super(http);
   }
 
-  fetchAll(): Observable<CustomHttpResponse<Todo[]>> {
-    return this.get<Todo[]>(this.url);
+  public fetchAll(): Observable<CustomHttpResponse<Todo[]>> {
+    return this.get<Todo[]>(this._url);
   }
 }

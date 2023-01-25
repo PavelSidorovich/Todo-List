@@ -7,7 +7,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { CustomHttpResponse } from '../interfaces/custom-http-response.interface';
 
 export class RequestService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient) {}
 
   public get<T>(
     url: string,
@@ -21,7 +21,7 @@ export class RequestService {
       );
     }
 
-    return this.httpClient.get<T>(url, { params: params }).pipe(
+    return this._httpClient.get<T>(url, { params: params }).pipe(
       map((res) => {
         return { data: res, statusCode: 200 } as CustomHttpResponse<T>;
       }),
