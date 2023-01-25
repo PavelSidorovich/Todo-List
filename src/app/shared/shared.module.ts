@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { MaterialModule } from './material.module';
 import { RouterModule } from '@angular/router';
+import { HoverDirective } from './directives/hover.directive';
 
 @NgModule({
-  declarations: [SearchBarComponent],
+  declarations: [SearchBarComponent, HoverDirective],
   imports: [
     CommonModule,
     MaterialModule,
@@ -15,6 +16,6 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     MaterialModule,
   ],
-  exports: [SearchBarComponent, MaterialModule],
+  exports: [SearchBarComponent, MaterialModule, HoverDirective],
 })
 export class SharedModule {}
