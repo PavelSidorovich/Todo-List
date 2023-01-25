@@ -1,0 +1,59 @@
+<app-search-bar #searchBar (filterChanged)="filterTodos()"></app-search-bar>
+<div class="filter-options">
+  <mat-form-field>
+    <mat-label>Filter by status</mat-label>
+    <mat-select
+      [value]="selectedStatus"
+      (selectionChange)="selectedStatusChanged($event)"
+    >
+      <mat-option [value]="possibleTodoStatuses.ALL">All</mat-option>
+      <mat-option [value]="possibleTodoStatuses.PENDING">Pending</mat-option>
+      <mat-option [value]="possibleTodoStatuses.COMPLETED"
+        >Completed</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Sort by name</mat-label>
+    <mat-select
+      [value]="sortOption"
+      (selectionChange)="sortOptionChanged($event)"
+    >
+      <mat-option [value]="possibleSortOptions.NONE">None</mat-option>
+      <mat-option [value]="possibleSortOptions.ASC">Ascending</mat-option>
+      <mat-option [value]="possibleSortOptions.DESC">Descending</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<ng-container *ngIf="isLoading">
+  <mat-progress-spinner
+    class="loading-spinner"
+    color="primary"
+    mode="indeterminate"
+  >
+  </mat-progress-spinner>
+</ng-container>
+<ng-container *ngIf="errorMsg; else todoList">
+  <p>{{ errorMsg }}</p>
+</ng-container>
+<ng-template #todoList>
+  <ng-container *ngIf="!filteredTodos.length; else todoCards">
+    <p>Nothing found</p>
+  </ng-container>
+  <ng-template #todoCards>
+    <app-todo-card
+      *ngFor="let todo of filteredTodos"
+      [todo]="todo"
+      (onStatusChanged)="changeStatus($event)"
+      (onDelete)="deleteTodo($event)"
+    ></app-todo-card>
+    <mat-paginator
+      [pageIndex]="page"
+      (page)="handlePageEvent($event)"
+      [length]="totalTodos"
+      [pageSize]="size"
+    >
+    </mat-paginator>
+  </ng-template>
+</ng-template>

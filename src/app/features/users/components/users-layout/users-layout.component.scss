@@ -1,0 +1,14 @@
+.user-card {
+  display: block;
+  margin-bottom: 1em;
+
+  .user-card__content {
+    display: flex;
+    justify-content: space-between;
+
+    .user-card__content--main {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

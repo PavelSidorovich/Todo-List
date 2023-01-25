@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TodoListComponent } from './core/pages/todo-list/todo-list.component';
-import { PageNotFoundComponent } from './shared/pages/page-not-found/page-not-found.component';
+import { TodosLayoutComponent } from './core/components/todos-layout/todos-layout.component';
+import { PageNotFoundLayoutComponent } from './core/components/page-not-found-layout/page-not-found-layout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/todos', pathMatch: 'full' },
-  { path: 'todos', component: TodoListComponent },
+  { path: 'todos', component: TodosLayoutComponent },
   {
     path: 'users/new',
     pathMatch: 'full',
     loadChildren: () =>
-      import('./features/user-control/user-control.module').then(
-        (m) => m.UserControlModule
+      import('./features/user-form/user-form.module').then(
+        (m) => m.UserFormModule
       ),
   },
   {
@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: PageNotFoundComponent,
+    component: PageNotFoundLayoutComponent,
   },
 ];
 

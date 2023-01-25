@@ -17,15 +17,14 @@ import { debounceTime, fromEvent, map, Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent implements AfterViewInit, OnDestroy {
-  filterValue: string = '';
-  filterSubscription: Subscription;
-  @Output() filterChanged = new EventEmitter<string>();
-  @ViewChild('searchBar') searchBar: ElementRef;
+  public filterValue: string = '';
+  @Output() public filterChanged = new EventEmitter<string>();
 
-  constructor() {}
+  private _filterSubscription: Subscription;
+  @ViewChild('searchBar') private _searchBar: ElementRef;
 
-  ngAfterViewInit(): void {
-    this.filterSubscription = fromEvent(this.searchBar.nativeElement, 'keyup')
+  public ngAfterViewInit(): void {
+    this._filterSubscription = fromEvent(this._searchBar.nativeElement, 'keyup')
       .pipe(
         map((v: any) => v.currentTarget.value),
         debounceTime(500)
@@ -35,11 +34,11 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.filterSubscription.unsubscribe();
+  public ngOnDestroy(): void {
+    this._filterSubscription.unsubscribe();
   }
 
-  clearSearch(): void {
+  public clearSearch(): void {
     this.filterValue = '';
     this.filterChanged.emit(this.filterValue);
   }

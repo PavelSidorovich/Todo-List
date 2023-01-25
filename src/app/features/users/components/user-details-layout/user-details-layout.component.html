@@ -1,0 +1,52 @@
+<div class="user-details-page">
+  <a [routerLink]="['../']" color="accent" mat-button class="link--back">
+    <mat-icon>arrow_back</mat-icon>Back
+  </a>
+  <div *ngIf="isLoading">
+    <mat-progress-spinner
+      class="loading-spinner"
+      color="primary"
+      mode="indeterminate"
+    >
+    </mat-progress-spinner>
+  </div>
+  <div *ngIf="errorMsg; else userCard">{{ errorMsg }}</div>
+  <ng-template #userCard>
+    <ng-container *ngIf="user">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon class="user-card__avatar">account_circle</mat-icon>
+          </div>
+          <mat-card-title>{{ user.name }}</mat-card-title>
+          <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="user-card__details">
+          <div>
+            <h3>Company:</h3>
+            <p>
+              {{ user.company.name }}
+            </p>
+          </div>
+          <div>
+            <h3>Address:</h3>
+            <p>
+              {{ user.address.suite }}, {{ user.address.street }},
+              {{ user.address.city }}
+            </p>
+          </div>
+          <div>
+            <h3>Phone:</h3>
+            <p>
+              {{ user.phone }}
+            </p>
+          </div>
+          <div>
+            <h3>Website:</h3>
+            <a [href]="user.website">{{ user.website }}</a>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </ng-template>
+</div>

@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
@@ -13,21 +12,32 @@ import {
   styleUrls: ['./modal-window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalWindowComponent implements OnInit {
-  @Input() title: string = '';
-  @Input() body: string = '';
-  @Output() closeEvent = new EventEmitter();
-  @Output() confirmEvent = new EventEmitter();
+export class ModalWindowComponent {
+  @Input() public set title(title: string) {
+    this._title = title;
+  }
+  public get title(): string {
+    return this._title;
+  }
 
-  constructor() {}
+  @Input() public set body(body: string) {
+    this._body = body;
+  }
+  public get body(): string {
+    return this._body;
+  }
 
-  ngOnInit(): void {}
+  @Output() public closeEvent = new EventEmitter();
+  @Output() public confirmEvent = new EventEmitter();
 
-  onClose(): void {
+  private _title = '';
+  private _body = '';
+
+  public onClose(): void {
     this.closeEvent.emit();
   }
 
-  onConfirm(): void {
+  public onConfirm(): void {
     this.confirmEvent.emit();
   }
 }

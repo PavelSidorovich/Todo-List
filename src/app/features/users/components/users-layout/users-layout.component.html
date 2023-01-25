@@ -1,0 +1,32 @@
+<app-search-bar #searchBar (filterChanged)="filterUsers()"></app-search-bar>
+<ng-container *ngIf="isLoading">
+  <mat-progress-spinner
+    class="loading-spinner"
+    color="primary"
+    mode="indeterminate"
+  >
+  </mat-progress-spinner>
+</ng-container>
+<ng-container *ngIf="errorMsg; else userList">
+  <p>{{ errorMsg }}</p>
+</ng-container>
+<ng-template #userList>
+  <ng-container *ngIf="!filteredUsers.length; else users">
+    <p>Nothing found</p>
+  </ng-container>
+  <ng-template #users>
+    <a
+      *ngFor="let user of filteredUsers"
+      [routerLink]="['./', user.id]"
+      class="user-card"
+    >
+      <mat-card>
+        <mat-card-content class="user-card__content">
+          <div class="user-card__content--main">
+            <span>{{ user.name }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </a>
+  </ng-template>
+</ng-template>

@@ -1,12 +1,11 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Todo } from '../../models/todo';
+import { Todo } from '../todos-layout/todo.interface';
 
 @Component({
   selector: 'app-todo-card',
@@ -14,20 +13,16 @@ import { Todo } from '../../models/todo';
   styleUrls: ['./todo-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoCardComponent implements OnInit {
-  @Input() todo: Todo;
-  @Output() onDelete = new EventEmitter<number>();
-  @Output() onStatusChanged = new EventEmitter<number>();
+export class TodoCardComponent {
+  @Input() public todo: Todo;
+  @Output() public onDelete = new EventEmitter<number>();
+  @Output() public onStatusChanged = new EventEmitter<number>();
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  statusChanged(id: number): void {
+  public statusChanged(id: number): void {
     this.onStatusChanged.emit(id);
   }
 
-  handleDelete() {
+  public handleDelete(): void {
     this.onDelete.emit(this.todo.id);
   }
 }
