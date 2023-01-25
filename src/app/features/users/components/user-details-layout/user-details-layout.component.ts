@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,6 +10,7 @@ import { Subscription, switchMap } from 'rxjs';
 
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
+import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
 import { UserService } from '../../services/user.service';
 import { User } from '../users-layout/user.interface';
 
@@ -44,28 +44,23 @@ export class UserDetailsLayoutComponent
           return this._userService.fetchById(Number(params.get('id')));
         })
       )
-      .subscribe({
-        next: (res: User) => {
-          this.user = res;
+      .subscribe((res: CustomHttpResponse<User>) => {
+        if (res.errorMsg) {
+          this.errorMsg =
+            res.statusCode === 404
+              ? "Sorry! Can't find user with such id."
+              : res.errorMsg;
+          this.fetchStatus = FetchStatus.ERROR;
+        } else {
+          this.user = res.data;
           this.fetchStatus = FetchStatus.COMPLETED;
           this._changeDetectorRef.detectChanges();
-        },
-        error: (err: HttpErrorResponse) => {
-          this._handleFetchError(err);
-          this.fetchStatus = FetchStatus.ERROR;
-          this._changeDetectorRef.detectChanges();
-        },
+        }
+        this._changeDetectorRef.detectChanges();
       });
   }
 
   public ngOnDestroy(): void {
     this._userSubscription.unsubscribe();
-  }
-
-  private _handleFetchError(error: HttpErrorResponse): void {
-    this.errorMsg =
-      error.status === 404
-        ? "Sorry! Can't find user with such id."
-        : error.message;
   }
 }

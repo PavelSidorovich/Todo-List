@@ -8,7 +8,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { Subscription, take } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Todo } from './todo.interface';
@@ -20,6 +19,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { TodoStatus } from './todo-status.enum';
 import { SortOption } from '../../../shared/enums/sort-option.enum';
 import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
+import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
 
 @Component({
   selector: 'app-todos',
@@ -63,19 +63,20 @@ export class TodosLayoutComponent
 
   private _fetchTodos(): void {
     this.fetchStatus = FetchStatus.LOADING;
-    this._todoSubscription = this._todoService.fetchAll().subscribe({
-      next: (todos: Todo[]) => {
-        this.fetchStatus = FetchStatus.COMPLETED;
-        this._todos = todos;
-        this.filteredTodos = todos;
-        this._applyPagination();
-        this._changeDetectorRef.detectChanges();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.fetchStatus = FetchStatus.ERROR;
-        this.errorMsg = error.message;
-      },
-    });
+    this._todoSubscription = this._todoService
+      .fetchAll()
+      .subscribe((res: CustomHttpResponse<Todo[]>) => {
+        if (res.errorMsg) {
+          this.fetchStatus = FetchStatus.ERROR;
+          this.errorMsg = res.errorMsg;
+        } else {
+          this.fetchStatus = FetchStatus.COMPLETED;
+          this._todos = res.data;
+          this.filteredTodos = res.data;
+          this._applyPagination();
+          this._changeDetectorRef.detectChanges();
+        }
+      });
   }
 
   public filterTodos(): void {

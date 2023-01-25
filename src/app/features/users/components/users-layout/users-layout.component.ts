@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { SearchBarComponent } from 'src/app/shared/components/search-bar/search-bar.component';
 import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
+import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
 import { UserService } from '../../services/user.service';
 import { User } from './user.interface';
 
@@ -48,17 +48,19 @@ export class UsersLayoutComponent
 
   private _fetchUsers(): void {
     this.fetchStatus = FetchStatus.LOADING;
-    this._usersSubsription = this._userService.fetchAll().subscribe({
-      next: (data: User[]) => {
-        this._users = data;
-        this.fetchStatus = FetchStatus.COMPLETED;
-        this.filterUsers();
-      },
-      error: (err: HttpErrorResponse) => {
-        this.fetchStatus = FetchStatus.ERROR;
-        this.errorMsg = err.message;
-      },
-    });
+    this._usersSubsription = this._userService
+      .fetchAll()
+      .subscribe((res: CustomHttpResponse<User[]>) => {
+        if (res.errorMsg) {
+          this.fetchStatus = FetchStatus.ERROR;
+          this.errorMsg = res.errorMsg;
+        } else {
+          this._users = res.data;
+          this.filteredUsers = res.data;
+          this.fetchStatus = FetchStatus.COMPLETED;
+        }
+        this._changeDetectorRef.detectChanges();
+      });
   }
 
   public filterUsers(): void {
