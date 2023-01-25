@@ -8,9 +8,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { CommonComponent } from 'src/app/shared/components/generic/common-component';
 import { SearchBarComponent } from 'src/app/shared/components/search-bar/search-bar.component';
-import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
 import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
 import { UserService } from '../../services/user.service';
 import { User } from './user.interface';
@@ -21,11 +19,10 @@ import { User } from './user.interface';
   styleUrls: ['./users-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersLayoutComponent
-  extends CommonComponent
-  implements AfterViewInit, OnDestroy
-{
+export class UsersLayoutComponent implements AfterViewInit, OnDestroy {
   public filteredUsers: User[] = [];
+  public isLoading: boolean = false;
+  public errorMsg: string = '';
 
   private _users: User[] = [];
   private _usersSubsription: Subscription;
@@ -34,9 +31,7 @@ export class UsersLayoutComponent
   constructor(
     private _userService: UserService,
     private _changeDetectorRef: ChangeDetectorRef
-  ) {
-    super();
-  }
+  ) {}
 
   public ngAfterViewInit(): void {
     this._fetchUsers();
@@ -47,18 +42,17 @@ export class UsersLayoutComponent
   }
 
   private _fetchUsers(): void {
-    this.fetchStatus = FetchStatus.LOADING;
+    this.isLoading = true;
     this._usersSubsription = this._userService
       .fetchAll()
       .subscribe((res: CustomHttpResponse<User[]>) => {
         if (res.errorMsg) {
-          this.fetchStatus = FetchStatus.ERROR;
           this.errorMsg = res.errorMsg;
         } else {
           this._users = res.data;
           this.filteredUsers = res.data;
-          this.fetchStatus = FetchStatus.COMPLETED;
         }
+        this.isLoading = false;
         this._changeDetectorRef.detectChanges();
       });
   }

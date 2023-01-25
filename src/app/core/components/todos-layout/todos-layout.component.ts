@@ -7,18 +7,16 @@ import {
   ViewChild,
   OnInit,
 } from '@angular/core';
-import { Subscription, take } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Todo } from './todo.interface';
 import { TodoService } from '../../services/todo.service';
 import { ModalWindowService } from '../../services/modal-window.service';
-import { CommonComponent } from '../../../shared/components/generic/common-component';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { MatSelectChange } from '@angular/material/select';
 import { TodoStatus } from './todo-status.enum';
 import { SortOption } from '../../../shared/enums/sort-option.enum';
-import { FetchStatus } from 'src/app/shared/enums/fetch-status.enum';
 import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
 
 @Component({
@@ -27,10 +25,7 @@ import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-respon
   styleUrls: ['./todos-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodosLayoutComponent
-  extends CommonComponent
-  implements OnInit, OnDestroy
-{
+export class TodosLayoutComponent implements OnInit, OnDestroy {
   public page: number = 0;
   public size: number = 20;
   public totalTodos: number = 0;
@@ -39,9 +34,11 @@ export class TodosLayoutComponent
   public possibleTodoStatuses = TodoStatus;
   public sortOption: SortOption = SortOption.NONE;
   public possibleSortOptions = SortOption;
+  public isLoading: boolean = false;
+  public errorMsg: string = '';
 
   private _todos: Todo[] = [];
-  private _todoSubscription: Subscription;
+  private _cleanUp$ = new Subject<void>();
   @ViewChild('searchBar') private _searchComponent: SearchBarComponent;
 
   constructor(
@@ -49,33 +46,32 @@ export class TodosLayoutComponent
     private _changeDetectorRef: ChangeDetectorRef,
     private _viewContainerRef: ViewContainerRef,
     private _modalService: ModalWindowService
-  ) {
-    super();
-  }
+  ) {}
 
   public ngOnInit(): void {
     this._fetchTodos();
   }
 
   public ngOnDestroy(): void {
-    this._todoSubscription.unsubscribe();
+    this._cleanUp$.next();
+    this._cleanUp$.complete();
   }
 
   private _fetchTodos(): void {
-    this.fetchStatus = FetchStatus.LOADING;
-    this._todoSubscription = this._todoService
+    this.isLoading = true;
+    this._todoService
       .fetchAll()
+      .pipe(takeUntil(this._cleanUp$))
       .subscribe((res: CustomHttpResponse<Todo[]>) => {
         if (res.errorMsg) {
-          this.fetchStatus = FetchStatus.ERROR;
           this.errorMsg = res.errorMsg;
         } else {
-          this.fetchStatus = FetchStatus.COMPLETED;
           this._todos = res.data;
           this.filteredTodos = res.data;
           this._applyPagination();
-          this._changeDetectorRef.detectChanges();
         }
+        this.isLoading = false;
+        this._changeDetectorRef.detectChanges();
       });
   }
 

@@ -1,8 +1,8 @@
-<div [ngSwitch]="fetchStatus" class="user-details-page">
+<div class="user-details-page">
   <a [routerLink]="['../']" color="accent" mat-button class="link--back">
     <mat-icon>arrow_back</mat-icon>Back
   </a>
-  <div *ngSwitchCase="availiableFetchStatus.LOADING">
+  <div *ngIf="isLoading">
     <mat-progress-spinner
       class="loading-spinner"
       color="primary"
@@ -10,7 +10,8 @@
     >
     </mat-progress-spinner>
   </div>
-  <div *ngSwitchCase="availiableFetchStatus.COMPLETED">
+  <div *ngIf="errorMsg; else userCard">{{ errorMsg }}</div>
+  <ng-template #userCard>
     <ng-container *ngIf="user">
       <mat-card>
         <mat-card-header>
@@ -47,6 +48,5 @@
         </mat-card-content>
       </mat-card>
     </ng-container>
-  </div>
-  <div *ngSwitchCase="availiableFetchStatus.ERROR">{{ errorMsg }}</div>
+  </ng-template>
 </div>

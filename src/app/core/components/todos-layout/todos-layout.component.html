@@ -26,36 +26,34 @@
   </mat-form-field>
 </div>
 
-<div [ngSwitch]="fetchStatus">
-  <ng-container *ngSwitchCase="availiableFetchStatus.LOADING">
-    <mat-progress-spinner
-      class="loading-spinner"
-      color="primary"
-      mode="indeterminate"
+<ng-container *ngIf="isLoading">
+  <mat-progress-spinner
+    class="loading-spinner"
+    color="primary"
+    mode="indeterminate"
+  >
+  </mat-progress-spinner>
+</ng-container>
+<ng-container *ngIf="errorMsg; else todoList">
+  <p>{{ errorMsg }}</p>
+</ng-container>
+<ng-template #todoList>
+  <ng-container *ngIf="!filteredTodos.length; else todoCards">
+    <p>Nothing found</p>
+  </ng-container>
+  <ng-template #todoCards>
+    <app-todo-card
+      *ngFor="let todo of filteredTodos"
+      [todo]="todo"
+      (onStatusChanged)="changeStatus($event)"
+      (onDelete)="deleteTodo($event)"
+    ></app-todo-card>
+    <mat-paginator
+      [pageIndex]="page"
+      (page)="handlePageEvent($event)"
+      [length]="totalTodos"
+      [pageSize]="size"
     >
-    </mat-progress-spinner>
-  </ng-container>
-  <ng-container *ngSwitchCase="availiableFetchStatus.ERROR">
-    <p>{{ errorMsg }}</p>
-  </ng-container>
-  <ng-container *ngSwitchCase="availiableFetchStatus.COMPLETED">
-    <ng-container *ngIf="!filteredTodos.length; else todoCards">
-      <p>Nothing found</p>
-    </ng-container>
-    <ng-template #todoCards>
-      <app-todo-card
-        *ngFor="let todo of filteredTodos"
-        [todo]="todo"
-        (onStatusChanged)="changeStatus($event)"
-        (onDelete)="deleteTodo($event)"
-      ></app-todo-card>
-      <mat-paginator
-        [pageIndex]="page"
-        (page)="handlePageEvent($event)"
-        [length]="totalTodos"
-        [pageSize]="size"
-      >
-      </mat-paginator>
-    </ng-template>
-  </ng-container>
-</div>
+    </mat-paginator>
+  </ng-template>
+</ng-template>
