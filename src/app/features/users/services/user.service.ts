@@ -14,17 +14,17 @@ export interface IUserService extends ReadService<User> {
 
 @Injectable()
 export class UserService extends RequestService implements ReadService<User> {
-  url: string = Api.URL + 'users';
+  private _url: string = Api.URL + 'users';
 
   constructor(http: HttpClient) {
     super(http);
   }
 
-  fetchById(id: number): Observable<CustomHttpResponse<User>> {
-    return this.get<User>(this.url + `/${id}`);
+  public fetchById(id: number): Observable<CustomHttpResponse<User>> {
+    return this.get<User>(this._url + `/${id}`);
   }
 
-  fetchAll(): Observable<CustomHttpResponse<User[]>> {
-    return this.get<User[]>(this.url);
+  public fetchAll(): Observable<CustomHttpResponse<User[]>> {
+    return this.get<User[]>(this._url);
   }
 }
