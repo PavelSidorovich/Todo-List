@@ -6,33 +6,33 @@ import { ModalWindowComponent } from '../components/modal-window/modal-window.co
   providedIn: 'root',
 })
 export class ModalWindowService {
-  private componentRef: ComponentRef<ModalWindowComponent>;
-  private observable$: Subject<string>;
+  private _componentRef: ComponentRef<ModalWindowComponent>;
+  private _observable$: Subject<string>;
 
   constructor() {}
 
-  openModal(
+  public openModal(
     entry: ViewContainerRef,
     title: string,
     body: string
   ): Observable<string> {
-    this.componentRef = entry.createComponent(ModalWindowComponent);
-    this.componentRef.instance.title = title;
-    this.componentRef.instance.body = body;
-    this.componentRef.instance.closeEvent.subscribe(() => this.closeModal());
-    this.componentRef.instance.confirmEvent.subscribe(() => this.confirm());
-    this.observable$ = new Subject<string>();
+    this._componentRef = entry.createComponent(ModalWindowComponent);
+    this._componentRef.instance.title = title;
+    this._componentRef.instance.body = body;
+    this._componentRef.instance.closeEvent.subscribe(() => this.closeModal());
+    this._componentRef.instance.confirmEvent.subscribe(() => this.confirm());
+    this._observable$ = new Subject<string>();
 
-    return this.observable$.asObservable();
+    return this._observable$.asObservable();
   }
 
-  closeModal(): void {
-    this.observable$.complete();
-    this.componentRef.destroy();
+  public closeModal(): void {
+    this._observable$.complete();
+    this._componentRef.destroy();
   }
 
-  confirm(): void {
-    this.observable$.next('confirm');
+  public confirm(): void {
+    this._observable$.next('confirm');
     this.closeModal();
   }
 }
