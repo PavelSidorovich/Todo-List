@@ -2,14 +2,17 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnDestroy,
   OnInit,
+  ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 
 import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
 import { UserService } from '../../services/user.service';
+import { WIDTH_BASED_COMPONENT } from '../../users.module';
 import { User } from '../users-layout/user.interface';
 
 @Component({
@@ -28,7 +31,9 @@ export class UserDetailsLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private _userService: UserService,
     private _route: ActivatedRoute,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _viewContainerRef: ViewContainerRef,
+    @Inject(WIDTH_BASED_COMPONENT) private _componentToken: any
   ) {}
 
   public ngOnInit(): void {
@@ -52,6 +57,8 @@ export class UserDetailsLayoutComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this._changeDetectorRef.detectChanges();
       });
+
+    this._viewContainerRef.createComponent(this._componentToken);
   }
 
   public ngOnDestroy(): void {
