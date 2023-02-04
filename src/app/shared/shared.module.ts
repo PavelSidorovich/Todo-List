@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { MaterialModule } from './material.module';
@@ -16,6 +16,7 @@ import { UppercasePipe } from './pipes/uppercase.pipe';
     FormsModule,
     RouterModule,
     MaterialModule,
+    ReactiveFormsModule,
   ],
   exports: [SearchBarComponent, MaterialModule, HoverDirective, UppercasePipe],
 })

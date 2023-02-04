@@ -86,7 +86,9 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
 
   private _applySearch(): void {
     this.filteredTodos = this._todos.filter((todo) =>
-      todo.title.includes(this._searchComponent.filterValue.toLowerCase())
+      todo.title.includes(
+        this._searchComponent.filterValue.value?.toLowerCase() || ''
+      )
     );
   }
 

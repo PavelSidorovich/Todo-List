@@ -58,7 +58,7 @@ export class UsersLayoutComponent implements AfterViewInit, OnDestroy {
   }
 
   public filterUsers(): void {
-    const filter = this._searchComponent.filterValue.toLowerCase();
+    const filter = this._searchComponent.filterValue.value?.toLowerCase() || '';
 
     this.filteredUsers = this._users.filter((user) => {
       return (

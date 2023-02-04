@@ -17,8 +17,8 @@ export class ModalWindowService {
     body: string
   ): Observable<string> {
     this._componentRef = entry.createComponent(ModalWindowComponent);
-    this._componentRef.instance.title = title;
-    this._componentRef.instance.body = body;
+    this._componentRef.instance.modalTitle = title;
+    this._componentRef.instance.modalBody = body;
     this._componentRef.instance.closeEvent.subscribe(() => this.closeModal());
     this._componentRef.instance.confirmEvent.subscribe(() => this.confirm());
     this._observable$ = new Subject<string>();

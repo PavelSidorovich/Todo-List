@@ -7,7 +7,9 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
+  OnInit,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { debounceTime, fromEvent, map, Subscription } from 'rxjs';
 
 @Component({
@@ -16,12 +18,18 @@ import { debounceTime, fromEvent, map, Subscription } from 'rxjs';
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchBarComponent implements AfterViewInit, OnDestroy {
-  public filterValue: string = '';
+export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
+  public filterValue = new FormControl<string>('');
   @Output() public filterChanged = new EventEmitter<string>();
 
   private _filterSubscription: Subscription;
+  private _filterValueChangesSubscription: Subscription;
   @ViewChild('searchBar') private _searchBar: ElementRef;
+
+  public ngOnInit(): void {
+    this._filterValueChangesSubscription =
+      this.filterValue.valueChanges.subscribe((res) => console.log(res));
+  }
 
   public ngAfterViewInit(): void {
     this._filterSubscription = fromEvent(this._searchBar.nativeElement, 'keyup')
@@ -36,10 +44,13 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this._filterSubscription.unsubscribe();
+    this._filterValueChangesSubscription.unsubscribe();
   }
 
+  private testValueChanges(): void {}
+
   public clearSearch(): void {
-    this.filterValue = '';
-    this.filterChanged.emit(this.filterValue);
+    this.filterValue.setValue('');
+    this.filterChanged.emit('');
   }
 }
