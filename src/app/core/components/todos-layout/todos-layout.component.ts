@@ -147,11 +147,10 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
     this._modalService
       .openModal(this._viewContainerRef, modalTitle, modalBody)
       .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this._todos = this._todos.filter((todo) => todo.id !== id);
-          this._changeDetectorRef.detectChanges();
-        },
+      .subscribe(() => {
+        this._todos = this._todos.filter((todo) => todo.id !== id);
+        this.filterTodos();
+        this._changeDetectorRef.detectChanges();
       });
   }
 
