@@ -1,7 +1,7 @@
 <div class="search-bar">
   <input
     #searchBar
-    [(ngModel)]="filterValue"
+    [formControl]="filterValue"
     class="search-bar__input"
     placeholder="Search"
   />
