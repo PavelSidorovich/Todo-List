@@ -11,7 +11,6 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Todo } from './todo.interface';
-import { TodoService } from '../../services/todo.service';
 import { ModalWindowService } from '../../services/modal-window.service';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { MatSelectChange } from '@angular/material/select';
@@ -42,7 +41,6 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('searchBar') private _searchComponent: SearchBarComponent;
 
   constructor(
-    private _todoService: TodoService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _viewContainerRef: ViewContainerRef,
     private _modalService: ModalWindowService,
