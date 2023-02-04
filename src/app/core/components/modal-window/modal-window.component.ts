@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
   Input,
@@ -8,9 +9,17 @@ import {
 
 @Component({
   selector: 'app-modal-window',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('openClose', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-100%)' }),
+        animate('0.3s'),
+      ]),
+    ]),
+  ],
   templateUrl: './modal-window.component.html',
   styleUrls: ['./modal-window.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalWindowComponent {
   @Input()
@@ -24,8 +33,8 @@ export class ModalWindowComponent {
 
   @Output() public closeEvent = new EventEmitter();
   @Output() public confirmEvent = new EventEmitter();
-  public title = '';
-  public body = '';
+  public title: string = '';
+  public body: string = '';
 
   public onClose(): void {
     this.closeEvent.emit();

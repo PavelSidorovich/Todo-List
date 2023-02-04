@@ -11,13 +11,12 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Todo } from './todo.interface';
-import { TodoService } from '../../services/todo.service';
 import { ModalWindowService } from '../../services/modal-window.service';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { MatSelectChange } from '@angular/material/select';
 import { TodoStatus } from './todo-status.enum';
 import { SortOption } from '../../../shared/enums/sort-option.enum';
-import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-todos',
@@ -42,14 +41,14 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('searchBar') private _searchComponent: SearchBarComponent;
 
   constructor(
-    private _todoService: TodoService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _viewContainerRef: ViewContainerRef,
-    private _modalService: ModalWindowService
+    private _modalService: ModalWindowService,
+    private _route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
-    this._fetchTodos();
+    this._processTodos();
   }
 
   public ngOnDestroy(): void {
@@ -57,17 +56,16 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
     this._cleanUp$.complete();
   }
 
-  private _fetchTodos(): void {
+  private _processTodos(): void {
     this.isLoading = true;
-    this._todoService
-      .fetchAll()
+    this._route.data
       .pipe(takeUntil(this._cleanUp$))
-      .subscribe((res: CustomHttpResponse<Todo[]>) => {
-        if (res.errorMsg) {
-          this.errorMsg = res.errorMsg;
+      .subscribe(({ fetchedTodos }) => {
+        if (fetchedTodos.errorMsg) {
+          this.errorMsg = fetchedTodos.errorMsg;
         } else {
-          this._todos = res.data;
-          this.filteredTodos = res.data;
+          this._todos = fetchedTodos.data;
+          this.filteredTodos = fetchedTodos.data;
           this._applyPagination();
         }
         this.isLoading = false;
@@ -149,11 +147,10 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
     this._modalService
       .openModal(this._viewContainerRef, modalTitle, modalBody)
       .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this._todos = this._todos.filter((todo) => todo.id !== id);
-          this._changeDetectorRef.detectChanges();
-        },
+      .subscribe(() => {
+        this._todos = this._todos.filter((todo) => todo.id !== id);
+        this.filterTodos();
+        this._changeDetectorRef.detectChanges();
       });
   }
 
