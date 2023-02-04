@@ -17,7 +17,7 @@ import { SearchBarComponent } from '../../../shared/components/search-bar/search
 import { MatSelectChange } from '@angular/material/select';
 import { TodoStatus } from './todo-status.enum';
 import { SortOption } from '../../../shared/enums/sort-option.enum';
-import { CustomHttpResponse } from 'src/app/shared/interfaces/custom-http-response.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-todos',
@@ -45,11 +45,12 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
     private _todoService: TodoService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _viewContainerRef: ViewContainerRef,
-    private _modalService: ModalWindowService
+    private _modalService: ModalWindowService,
+    private _route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
-    this._fetchTodos();
+    this._processTodos();
   }
 
   public ngOnDestroy(): void {
@@ -57,17 +58,16 @@ export class TodosLayoutComponent implements OnInit, OnDestroy {
     this._cleanUp$.complete();
   }
 
-  private _fetchTodos(): void {
+  private _processTodos(): void {
     this.isLoading = true;
-    this._todoService
-      .fetchAll()
+    this._route.data
       .pipe(takeUntil(this._cleanUp$))
-      .subscribe((res: CustomHttpResponse<Todo[]>) => {
-        if (res.errorMsg) {
-          this.errorMsg = res.errorMsg;
+      .subscribe(({ fetchedTodos }) => {
+        if (fetchedTodos.errorMsg) {
+          this.errorMsg = fetchedTodos.errorMsg;
         } else {
-          this._todos = res.data;
-          this.filteredTodos = res.data;
+          this._todos = fetchedTodos.data;
+          this.filteredTodos = fetchedTodos.data;
           this._applyPagination();
         }
         this.isLoading = false;
